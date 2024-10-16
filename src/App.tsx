@@ -1,10 +1,11 @@
-import React from "react";
 import UpvoteList from "./components/UpvoteList";
 
 function App() {
   return (
     <div className="App">
-      <h1>Upvote List</h1>
+      <h1>Scrawlr Technical Assessment - Upvote</h1>
+      <UpvoteList />
+      <UpvoteList />
       <UpvoteList />
     </div>
   );

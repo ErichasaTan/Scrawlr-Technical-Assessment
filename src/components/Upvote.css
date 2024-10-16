@@ -3,9 +3,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 4px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -18,18 +18,15 @@
 
 .upvote.selected {
   background-color: #e5e8fd;
-  border: 1px solid #253cf2;
 }
 
 /* Arrow icon styling */
 .upvote-icon {
-  width: 16px;
-  height: 16px;
-  fill: #343a40;
+  filter: brightness(0) saturate(100%) invert(23%) sepia(11%) saturate(0%) hue-rotate(177deg) brightness(90%) contrast(85%);
 }
 
 .upvote.selected .upvote-icon {
-  fill: #253cf2;
+  filter: brightness(0) saturate(100%) invert(35%) sepia(79%) saturate(3519%) hue-rotate(232deg) brightness(92%) contrast(102%);
 }
 
 .upvote:hover {
