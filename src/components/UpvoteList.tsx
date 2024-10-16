@@ -1,36 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import Upvote from "./Upvote";
+import { UpvoteContext } from "../context/UpvoteContext";
 import "./UpvoteList.css";
 
-const UpvoteList: React.FC = () => {
-  // Initial state with localStorage persistence
-  const [upvotes, setUpvotes] = useState<boolean[]>(() => {
-    const storedUpvotes = localStorage.getItem("upvotes");
-    return storedUpvotes ? JSON.parse(storedUpvotes) : [false, false];
-  });
+interface UpvoteListProps {
+  listIndex: number; // Unique index to identify each upvote list
+}
 
-  useEffect(() => {
-    localStorage.setItem("upvotes", JSON.stringify(upvotes));
-  }, [upvotes]);
+const UpvoteList: React.FC<UpvoteListProps> = ({ listIndex }) => {
+  const context = useContext(UpvoteContext);
 
-  // Toggle upvote state
+  if (!context) {
+    throw new Error("UpvoteList must be used within an UpvoteProvider");
+  }
+
+  const { upvotes, setUpvotes } = context;
+
+  // Ensure the list exists and is an array
+  const currentUpvotes = upvotes[listIndex] || [];
+
+  // Toggle upvote state for the specific list
   const toggleUpvote = (index: number) => {
-    const updatedUpvotes = upvotes.map((selected, i) =>
+    const updatedList = currentUpvotes.map((selected, i) =>
       i === index ? !selected : selected
     );
+    const updatedUpvotes = [...upvotes];
+    updatedUpvotes[listIndex] = updatedList;
     setUpvotes(updatedUpvotes);
   };
 
-  // Add a new upvote to the list
+  // Add a new upvote to the specific list
   const addUpvote = () => {
-    const newUpvotes = [...upvotes, false];
-    setUpvotes(newUpvotes);
+    const newList = [...currentUpvotes, false];
+    const updatedUpvotes = [...upvotes];
+    updatedUpvotes[listIndex] = newList;
+    setUpvotes(updatedUpvotes);
   };
 
   return (
     <div className="upvote-list-wrapper">
       <div className="upvote-box">
-        {upvotes.map((isSelected, index) => (
+        {currentUpvotes.map((isSelected, index) => (
           <Upvote
             key={index}
             isSelected={isSelected}
